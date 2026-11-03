@@ -37,8 +37,11 @@ public class UserInterface {
                 default -> System.out.println("Ugyldigt valg.");
             }
         }
+
+        System.out.println("Programmet er afsluttet.");
     }
 
+    // Tilføj en ny film
     private void addMovie() {
         System.out.print("Titel: ");
         String title = scanner.nextLine();
@@ -47,13 +50,13 @@ public class UserInterface {
         String director = scanner.nextLine();
 
         System.out.print("Årstal: ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = readInt();
 
         System.out.print("Farvefilm (ja/nej): ");
         boolean color = scanner.nextLine().equalsIgnoreCase("ja");
 
         System.out.print("Længde i minutter: ");
-        int duration = Integer.parseInt(scanner.nextLine());
+        int duration = readInt();
 
         System.out.print("Genre: ");
         String genre = scanner.nextLine();
@@ -64,6 +67,7 @@ public class UserInterface {
         System.out.println("Filmen er tilføjet!");
     }
 
+    // Vis alle film
     private void showMovies(ArrayList<Movie> movies) {
         if (movies.isEmpty()) {
             System.out.println("Ingen film fundet.");
@@ -72,15 +76,20 @@ public class UserInterface {
 
         for (Movie movie : movies) {
             System.out.println("\n" + movie);
+            System.out.println("--------------------");
         }
     }
 
+    // Søg efter film
     private void searchMovies() {
         System.out.print("Søg efter titel: ");
         String title = scanner.nextLine();
-        showMovies(controller.searchMovies(title));
+
+        ArrayList<Movie> results = controller.searchMovies(title);
+        showMovies(results);
     }
 
+    // Find og vælg en film
     private Movie selectMovie() {
         System.out.print("Søg efter titel: ");
         String title = scanner.nextLine();
@@ -98,7 +107,7 @@ public class UserInterface {
         }
 
         System.out.print("Vælg nummer: ");
-        int number = Integer.parseInt(scanner.nextLine());
+        int number = readInt();
 
         if (number < 1 || number > results.size()) {
             System.out.println("Ugyldigt nummer.");
@@ -108,27 +117,51 @@ public class UserInterface {
         return results.get(number - 1);
     }
 
+    // Rediger film - Enter beholder eksisterende værdi
     private void editMovie() {
         Movie movie = selectMovie();
         if (movie == null) return;
 
-        System.out.print("Ny titel: ");
+        System.out.println("\nTryk Enter for at beholde værdien.");
+
+        System.out.print("Titel (" + movie.getTitle() + "): ");
         String title = scanner.nextLine();
+        if (title.isEmpty()) {
+            title = movie.getTitle();
+        }
 
-        System.out.print("Ny instruktør: ");
+        System.out.print("Instruktør (" + movie.getDirector() + "): ");
         String director = scanner.nextLine();
+        if (director.isEmpty()) {
+            director = movie.getDirector();
+        }
 
-        System.out.print("Nyt årstal: ");
-        int year = Integer.parseInt(scanner.nextLine());
+        System.out.print("Årstal (" + movie.getYearCreated() + "): ");
+        String yearInput = scanner.nextLine();
+        int year = yearInput.isEmpty()
+                ? movie.getYearCreated()
+                : parseIntOrDefault(yearInput, movie.getYearCreated());
 
-        System.out.print("Farvefilm (ja/nej): ");
-        boolean color = scanner.nextLine().equalsIgnoreCase("ja");
+        System.out.print("Farvefilm (" +
+                (movie.isInColor() ? "ja" : "nej") + "): ");
+        String colorInput = scanner.nextLine();
+        boolean color = colorInput.isEmpty()
+                ? movie.isInColor()
+                : colorInput.equalsIgnoreCase("ja");
 
-        System.out.print("Ny længde: ");
-        int duration = Integer.parseInt(scanner.nextLine());
+        System.out.print("Længde (" +
+                movie.getLengthInMinutes() + " minutter): ");
+        String durationInput = scanner.nextLine();
+        int duration = durationInput.isEmpty()
+                ? movie.getLengthInMinutes()
+                : parseIntOrDefault(durationInput,
+                movie.getLengthInMinutes());
 
-        System.out.print("Ny genre: ");
+        System.out.print("Genre (" + movie.getGenre() + "): ");
         String genre = scanner.nextLine();
+        if (genre.isEmpty()) {
+            genre = movie.getGenre();
+        }
 
         controller.updateMovie(movie, title, director,
                 year, color, duration, genre);
@@ -136,12 +169,43 @@ public class UserInterface {
         System.out.println("Filmen er opdateret!");
     }
 
+    // Slet film
     private void deleteMovie() {
         Movie movie = selectMovie();
         if (movie == null) return;
 
-        if (controller.deleteMovie(movie)) {
-            System.out.println("Filmen er slettet!");
+        System.out.print("Er du sikker på, at du vil slette "
+                + movie.getTitle() + "? (ja/nej): ");
+
+        String confirm = scanner.nextLine();
+
+        if (confirm.equalsIgnoreCase("ja")) {
+            if (controller.deleteMovie(movie)) {
+                System.out.println("Filmen er slettet!");
+            }
+        } else {
+            System.out.println("Sletning annulleret.");
+        }
+    }
+
+    // Læs et heltal uden at programmet crasher
+    private int readInt() {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Ugyldigt tal. Prøv igen: ");
+            }
+        }
+    }
+
+    // Brug den gamle værdi ved ugyldigt tal
+    private int parseIntOrDefault(String input, int defaultValue) {
+        try {
+            return Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Ugyldigt tal. Beholder gammel værdi.");
+            return defaultValue;
         }
     }
 }
