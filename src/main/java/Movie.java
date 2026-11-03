@@ -1,34 +1,97 @@
+
 public class Movie
 {
-//TODO: Gemmer filmens oplysninger
-private String titel;
-private String instruktoer;
-private int udgivelsesaar;
 
+    // Attributter
+    private String title;
+    private String director;
+    private int yearCreated;
+    private boolean inColor;
+    private int lengthInMinutes;
+    private String genre;
 
-// TODO: Opretter en film med titel, instruktør og år
-public Movie(String titel, String instruktoer, int udgivelsesaar)
-{
-    this.titel = titel;
-    this.instruktoer = instruktoer;
-    this.udgivelsesaar = udgivelsesaar;
+    // Constructor
+    public Movie(String title, String director, int yearCreated,
+                 boolean inColor, int lengthInMinutes, String genre)
+    {
+        this.title = title;
+        this.director = director;
+        this.yearCreated = yearCreated;
+        this.inColor = inColor;
+        this.lengthInMinutes = lengthInMinutes;
+        this.genre = genre;
+    }
 
-}
+    // Getters
+    public String getTitle()
+    {
+        return title;
+    }
 
-// TODO: Henter filmens titel
-public String getTitel(){
-    return titel;
-}
+    public String getDirector()
+    {
+        return director;
+    }
 
-// TODO: Henter filmens instruktør
-public String getInstruktoer(){
-    return instruktoer;
-}
+    public int getYearCreated()
+    {
+        return yearCreated;
+    }
 
-// TODO: Henter filmens udgivelsesår
-public int getUdgivelsesaar(){
-    return udgivelsesaar;
+    public boolean isInColor()
+    {
+        return inColor;
+    }
 
-}
+    public int getLengthInMinutes()
+    {
+        return lengthInMinutes;
+    }
 
+    public String getGenre()
+    {
+        return genre;
+    }
+
+    // Setters
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public void setDirector(String director)
+    {
+        this.director = director;
+    }
+
+    public void setYearCreated(int yearCreated)
+    {
+        this.yearCreated = yearCreated;
+    }
+
+    public void setInColor(boolean inColor)
+    {
+        this.inColor = inColor;
+    }
+
+    public void setLengthInMinutes(int lengthInMinutes)
+    {
+        this.lengthInMinutes = lengthInMinutes;
+    }
+
+    public void setGenre(String genre)
+    {
+        this.genre = genre;
+    }
+
+    // Udskriv filmens oplysninger
+    @Override
+    public String toString()
+    {
+        return title + " (" + yearCreated + ")" +
+                "\nInstruktør: " + director +
+                "\nGenre: " + genre +
+                "\nLængde: " + lengthInMinutes + " minutter" +
+                "\nFarvefilm: " + (inColor ? "Ja" : "Nej");
+    }
 }

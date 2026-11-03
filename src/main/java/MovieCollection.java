@@ -1,32 +1,54 @@
+
 import java.util.ArrayList;
 
-public class MovieCollection
-{
-    // TODO: Gemmer alle film i en liste
-    private ArrayList<Movie> filmListe;
+public class MovieCollection {
 
-    // TODO: Opretter en tom filmsamling
-    public MovieCollection(){
-        filmListe = new ArrayList<>();
+    private ArrayList<Movie> movies;
+
+    // Constructor
+    public MovieCollection() {
+        movies = new ArrayList<>();
     }
 
-    // TODO: Tilføjer en film til listen
-    public void tilfoejFilm(Movie film){
-        filmListe.add(film);
+    // Tilføj en film
+    public void addMovie(Movie movie) {
+        movies.add(movie);
     }
 
-    // TODO: Viser alle film i samlingen
-    public void visFilm(){
-        for (Movie film : filmListe){
-            System.out.println(film.getTitel() + " - "+
-                    film.getInstruktoer() + " - " +
-                    film.getUdgivelsesaar());
+    // Vis alle film
+    public ArrayList<Movie> getMovies() {
+        return movies;
+    }
+
+    // Søg efter film ud fra titel
+    public ArrayList<Movie> searchMovies(String title) {
+        ArrayList<Movie> results = new ArrayList<>();
+
+        for (Movie movie : movies) {
+            if (movie.getTitle().toLowerCase()
+                    .contains(title.toLowerCase())) {
+                results.add(movie);
+            }
         }
+
+        return results;
+    }
+
+    // Rediger en film
+    public void updateMovie(Movie movie, String title,
+                            String director, int yearCreated,
+                            boolean inColor, int lengthInMinutes,
+                            String genre) {
+        movie.setTitle(title);
+        movie.setDirector(director);
+        movie.setYearCreated(yearCreated);
+        movie.setInColor(inColor);
+        movie.setLengthInMinutes(lengthInMinutes);
+        movie.setGenre(genre);
+    }
+
+    // Slet en film
+    public boolean deleteMovie(Movie movie) {
+        return movies.remove(movie);
     }
 }
-
-//HUSKENOTE:
-// ArrayList<Film> = En liste, der kan gemme mange film.
-//new ArrayList<>() = Opretter en tom liste.
-//add() = Tilføjer en film.
-//for = Gennemgår alle film i listen.
