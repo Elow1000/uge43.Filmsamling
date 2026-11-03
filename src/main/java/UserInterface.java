@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,6 +26,7 @@ public class UserInterface {
             System.out.println("3. Søg efter film");
             System.out.println("4. Rediger film");
             System.out.println("5. Slet film");
+            System.out.println("6. Markér film som set");
             System.out.println("0. Afslut");
             System.out.print("Vælg: ");
 
@@ -33,6 +38,7 @@ public class UserInterface {
                 case "3" -> searchMovies();
                 case "4" -> editMovie();
                 case "5" -> deleteMovie();
+                case "6" -> markMovieAsWatched();
                 case "0" -> running = false;
                 default -> System.out.println("Ugyldigt valg.");
             }
@@ -186,6 +192,42 @@ public class UserInterface {
             }
         } else {
             System.out.println("Sletning annulleret.");
+        }
+    }
+
+    private void markMovieAsWatched()
+    {
+        Movie movie = selectMovie();
+
+        if (movie == null){
+            return;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.
+                ofPattern("dd-MM-uuuu")
+                .withResolverStyle(ResolverStyle.STRICT);
+
+        while (true){
+            System.out.println("Hvornår så du filmen? (dd-MM-yyyy): ");
+            String input = scanner.nextLine();
+
+            try {
+                LocalDate date = LocalDate.parse(input, formatter);
+
+                if (date.isAfter(LocalDate.now())){
+                    System.out.println("Datoen må ikke være i fremtiden");
+                    continue;
+                }
+
+                movie.markAsWatced(date);
+
+                System.out.println("Filmen er markeret som set!");
+                System.out.println(movie);
+
+                return;
+            } catch (DateTimeParseException e){
+                System.out.println("Ugyldig dato. Prøv igen.");
+            }
         }
     }
 
