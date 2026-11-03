@@ -40,4 +40,19 @@ public class MovieTest {
         assertEquals("Drama", movie.getGenre());
         assertEquals(150, movie.getLengthInMinutes());
     }
+
+    @Test
+    void testInvalidYear(){
+
+        // Opretter en film og tester, at årstal 0 bliver afvist.
+
+
+        Movie movie = new Movie(
+                "Inception","Christoper Nolan",
+                2010, true, 148,"Science Fiction");
+
+        assertThrows(IllegalArgumentException.class, () ->{
+            movie.setYearCreated(0);
+        });
+    }
 }

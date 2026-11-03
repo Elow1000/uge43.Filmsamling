@@ -60,9 +60,16 @@ public class Movie
     }
 
     // Setters
+
+    // Kontrollerer at filmens titel ikke er tom.
+    // Hvis titlen er ugyldig, vises en fejl.
     public void setTitle(String title)
     {
-        this.title = title;
+        if (title == null || title.trim().isEmpty()){
+            throw new IllegalArgumentException("Filmens titel må ikke være tom");
+        }
+
+        this.title = title.trim();
     }
 
     public void setDirector(String director)
@@ -70,8 +77,15 @@ public class Movie
         this.director = director;
     }
 
+    // Tjekker at filmens årstal er større end 0.
+    // Hvis årstallet er ugyldigt, vises en fejl.
     public void setYearCreated(int yearCreated)
     {
+        if (yearCreated <= 0){
+            throw new IllegalArgumentException(
+                    "Årstallet skal være større end 0.");
+        }
+
         this.yearCreated = yearCreated;
     }
 
@@ -80,14 +94,29 @@ public class Movie
         this.inColor = inColor;
     }
 
+    // Tjekker at filmens længde er større end 0.
+    // Hvis længden er ugyldig, afvises den.
     public void setLengthInMinutes(int lengthInMinutes)
     {
+        if (lengthInMinutes <= 0){
+            throw new IllegalArgumentException(
+                    "Filmens længde skal være større end 0 minutter.");
+        }
+
         this.lengthInMinutes = lengthInMinutes;
+
     }
 
+    // Tjekker at filmens genre ikke er tom.
+    // Gemmer genren, hvis den er gyldig.
     public void setGenre(String genre)
     {
-        this.genre = genre;
+        if (genre == null || genre.trim().isEmpty()){
+            throw new IllegalArgumentException(
+                    "Filmens genre må ikke være tom");
+        }
+
+        this.genre = genre.trim();
     }
 
     // Udskriv filmens oplysninger
