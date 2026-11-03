@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 
 public class Movie
 {
@@ -9,6 +12,9 @@ public class Movie
     private boolean inColor;
     private int lengthInMinutes;
     private String genre;
+    private LocalDate lastWatched;
+
+
 
     // Constructor
     public Movie(String title, String director, int yearCreated,
@@ -88,10 +94,53 @@ public class Movie
     @Override
     public String toString()
     {
+        String watchedText = "Sidst set: aldrig";
+
+        if (lastWatched != null){
+            DateTimeFormatter formatter =
+                    DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            long days = getDaysSinceWatched(LocalDate.now());
+
+            watchedText = "Sidst set: " +
+                    lastWatched.format(formatter) +
+                    " (for " + days + " dage siden)";
+        }
         return title + " (" + yearCreated + ")" +
-                "\nInstruktør: " + director +
+                "\nInstruktør:" + director +
                 "\nGenre: " + genre +
-                "\nLængde: " + lengthInMinutes + " minutter" +
-                "\nFarvefilm: " + (inColor ? "Ja" : "Nej");
+                "\nLængde: " + lengthInMinutes +
+                "\nFarvefilm: " + (inColor ? "Ja" : "Nej") +
+                "\n"+ watchedText;
+    }
+
+    // Henter datoen, hvor filmen sidst blev set
+    public LocalDate getLastWatched()
+    {
+        return lastWatched;
+    }
+
+    // Tjekker om filmen er blevet set
+    public boolean hasBeenWatched()
+    {
+        return lastWatched != null;
+    }
+
+    // Gemmer datoen, hvor filmen blev set
+    public void markAsWatced(LocalDate date)
+    {
+        lastWatched = date;
+    }
+
+    // Beregner hvor mange dage siden filmen blev set
+    public long getDaysSinceWatched(LocalDate today)
+    {
+        return ChronoUnit.DAYS.between(lastWatched, today);
+
     }
 }
+
+// HUSKENOTE:
+// toString() viser alle filmens oplysninger.
+// Hvis filmen er set, vises datoen og antal dage siden.
+// Hvis filmen ikke er set, vises "Sidst set: aldrig".
