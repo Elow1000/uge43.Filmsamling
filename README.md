@@ -1,4 +1,3 @@
-
 # Filmsamling
 
 Et CRUD-program til en filmsamling lavet i Java.
