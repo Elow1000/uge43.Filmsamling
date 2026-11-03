@@ -6,7 +6,6 @@ Java-projekt med Maven og JDK 21.
 
 - Elias – Elow1000
 - Alex – Alex2309AAAA
-- Caroline - CaroMars
 
 
 # Filmsamling
