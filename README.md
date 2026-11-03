@@ -1,4 +1,4 @@
-# Filmsamling
+# MovieCollection
 
 Java-projekt med Maven og JDK 21.
 
@@ -8,7 +8,7 @@ Java-projekt med Maven og JDK 21.
 - Alex – Alex2309AAAA
 
 
-# Filmsamling
+# MovieCollection
 
 Et CRUD-program til en filmsamling – 1. semester, datamatiker, EK.
 
