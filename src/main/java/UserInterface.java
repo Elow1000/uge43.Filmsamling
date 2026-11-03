@@ -166,7 +166,8 @@ public class UserInterface {
         controller.updateMovie(movie, title, director,
                 year, color, duration, genre);
 
-        System.out.println("Filmen er opdateret!");
+        System.out.println("Filmen er opdateret:");
+        System.out.println(movie);
     }
 
     // Slet film
