@@ -40,4 +40,4 @@ build/
 
 .idea/
 target/
-*.class
+*.classmovies.txt
