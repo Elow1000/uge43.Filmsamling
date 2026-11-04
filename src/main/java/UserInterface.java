@@ -219,7 +219,7 @@ public class UserInterface {
                     continue;
                 }
 
-                movie.markAsWatced(date);
+                controller.markMovieAsWatched(movie, date);
 
                 System.out.println("Filmen er markeret som set!");
                 System.out.println(movie);
@@ -252,3 +252,7 @@ public class UserInterface {
         }
     }
 }
+
+// markAsWatched() = Ændrer filmens sidst-set-dato.
+// saveMovies() = Gemmer datoen, så den ikke forsvinder.
+// Controller = Forbinder filmens funktioner med filgemning.
