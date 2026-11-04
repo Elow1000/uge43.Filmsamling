@@ -156,9 +156,9 @@ public class Movie
     }
 
     // Gemmer datoen, hvor filmen blev set
-    public void markAsWatced(LocalDate date)
+    public void markAsWatched(LocalDate date)
     {
-        lastWatched = date;
+        this.lastWatched = date;
     }
 
     // Beregner hvor mange dage siden filmen blev set
